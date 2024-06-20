@@ -25,57 +25,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SafeArea(
             child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
                 Text(
                   'Join With Us',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
                     controller: _emailTEController,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(hintText: 'Email')),
-                SizedBox(
+                    decoration: const InputDecoration(hintText: 'Email')),
+                const SizedBox(
                   height: 8,
                 ),
                 TextFormField(
                     controller: _firstNameTEController,
-                    decoration: InputDecoration(hintText: 'First Name')),
-                SizedBox(
+                    decoration: const InputDecoration(hintText: 'First Name')),
+                const SizedBox(
                   height: 8,
                 ),
                 TextFormField(
                     controller: _lastNameTEController,
-                    decoration: InputDecoration(hintText: 'Last Name')),
-                SizedBox(
+                    decoration: const InputDecoration(hintText: 'Last Name')),
+                const SizedBox(
                   height: 8,
                 ),
                 TextFormField(
                     controller: _mobileTEController,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(hintText: 'Mobile')),
-                SizedBox(
+                    decoration: const InputDecoration(hintText: 'Mobile')),
+                const SizedBox(
                   height: 8,
                 ),
                 TextFormField(
                     controller: _passwordTEController,
-                    decoration: InputDecoration(hintText: 'Password')),
-                SizedBox(
+                    decoration: const InputDecoration(hintText: 'Password')),
+                const SizedBox(
                   height: 16,
                 ),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Icon(Icons.arrow_forward_ios_rounded),
+                  child: const Icon(Icons.arrow_forward_ios_rounded),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 36,
                 ),
                 _buildBackToSignInSection()
@@ -98,7 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             text: "Have account? ",
             children: [
               TextSpan(
-                style: TextStyle(color: AppColors.themeColor),
+                style: const TextStyle(color: AppColors.themeColor),
                 text: "Sign in",
                 recognizer: TapGestureRecognizer()..onTap = _onTapSignInButton,
               ),

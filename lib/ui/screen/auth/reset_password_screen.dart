@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:task_manager_app/ui/screen/auth/pin_verification_screen.dart';
 import 'package:task_manager_app/ui/screen/auth/sign_in_screen.dart';
 import 'package:task_manager_app/ui/utility/app_colors.dart';
 
@@ -24,11 +23,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         child: SafeArea(
             child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
                 Text(
@@ -39,25 +38,25 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   'Minimum length of password should be more than 6 letters and combination number',
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
                     controller: _passwordTEController,
                     keyboardType: TextInputType.text,
-                    decoration: InputDecoration(hintText: 'Password')),
+                    decoration: const InputDecoration(hintText: 'Password')),
                 TextFormField(
                     controller: _confirmPasswordTEController,
                     keyboardType: TextInputType.text,
-                    decoration: InputDecoration(hintText: 'Confirm Password')),
-                SizedBox(
+                    decoration: const InputDecoration(hintText: 'Confirm Password')),
+                const SizedBox(
                   height: 16,
                 ),
                 ElevatedButton(
                   onPressed: () => _onTapConfirmButton(),
-                  child: Text('Confirm'),
+                  child: const Text('Confirm'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 36,
                 ),
                 Center(
@@ -70,7 +69,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         text: "Have account? ",
                         children: [
                           TextSpan(
-                            style: TextStyle(color: AppColors.themeColor),
+                            style: const TextStyle(color: AppColors.themeColor),
                             text: "Sign in",
                             recognizer: TapGestureRecognizer()
                               ..onTap = _onTapSignInButton,
@@ -90,7 +89,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => SignInScreen(),
+          builder: (context) => const SignInScreen(),
         ),
         (route) => false);
   }
@@ -99,7 +98,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => SignInScreen(),
+          builder: (context) => const SignInScreen(),
         ),
         (route) => false);
   }

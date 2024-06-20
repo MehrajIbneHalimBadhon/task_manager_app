@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager_app/ui/screen/auth/email_verification_screen.dart';
 import 'package:task_manager_app/ui/screen/auth/sign_up_screen.dart';
+import 'package:task_manager_app/ui/screen/main_bottom_nav_screen.dart';
 import 'package:task_manager_app/ui/utility/app_colors.dart';
 
 import '../../widget/background_widget.dart';
@@ -24,38 +25,38 @@ class _SignInScreenState extends State<SignInScreen> {
         child: SafeArea(
             child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
                 Text(
                   'Get Started With',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
                     controller: _emailTEController,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(hintText: 'Email')),
-                SizedBox(
+                    decoration: const InputDecoration(hintText: 'Email')),
+                const SizedBox(
                   height: 8,
                 ),
                 TextFormField(
                     controller: _passwordTEController,
-                    decoration: InputDecoration(hintText: 'Password')),
-                SizedBox(
+                    decoration: const InputDecoration(hintText: 'Password')),
+                const SizedBox(
                   height: 16,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
-                  child: Icon(Icons.arrow_forward_ios_rounded),
+                  onPressed: _onTapNextButton,
+                  child: const Icon(Icons.arrow_forward_ios_rounded),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 36,
                 ),
                 Center(
@@ -63,7 +64,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       TextButton(
                         onPressed: () => _onTapForgetPasswordButton(),
-                        child: Text('Forget Password'),
+                        child: const Text('Forget Password'),
                       ),
                       RichText(
                         text: TextSpan(
@@ -74,7 +75,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             text: "Don't have an account? ",
                             children: [
                               TextSpan(
-                                style: TextStyle(color: AppColors.themeColor),
+                                style: const TextStyle(color: AppColors.themeColor),
                                 text: "Sign up",
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = _onTapSignUpButton,
@@ -92,11 +93,20 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+  void _onTapNextButton(){
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MainBottomNavigationScreen(),
+      ),
+    );
+  }
+
   void _onTapSignUpButton() {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SignUpScreen(),
+        builder: (context) => const SignUpScreen(),
       ),
     );
   }
@@ -105,7 +115,7 @@ class _SignInScreenState extends State<SignInScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EmailVerificationScreen(),
+        builder: (context) => const EmailVerificationScreen(),
       ),
     );
   }

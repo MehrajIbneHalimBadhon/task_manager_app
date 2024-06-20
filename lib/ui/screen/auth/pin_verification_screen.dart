@@ -24,11 +24,11 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
         child: SafeArea(
             child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
                 Text(
@@ -39,18 +39,18 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                   'A 6 digits verification pin has been sent to your email address',
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 _buildPinCodeTextField(),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 ElevatedButton(
                   onPressed: _onTapVerifyOTPButton,
-                  child: Text('Verify'),
+                  child: const Text('Verify'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 36,
                 ),
                 _buildSignInSection()
@@ -73,7 +73,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
             text: "Have account? ",
             children: [
               TextSpan(
-                style: TextStyle(color: AppColors.themeColor),
+                style: const TextStyle(color: AppColors.themeColor),
                 text: "Sign in",
                 recognizer: TapGestureRecognizer()..onTap = _onTapSignInButton,
               ),
@@ -95,7 +95,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
           selectedFillColor: AppColors.white,
           inactiveFillColor: AppColors.white,
           selectedColor: AppColors.themeColor),
-      animationDuration: Duration(milliseconds: 300),
+      animationDuration: const Duration(milliseconds: 300),
       backgroundColor: Colors.transparent,
       keyboardType: TextInputType.number,
       enableActiveFill: true,
@@ -108,7 +108,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => SignInScreen(),
+          builder: (context) => const SignInScreen(),
         ),
         (route) => false);
   }
@@ -117,7 +117,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ResetPasswordScreen(),
+        builder: (context) => const ResetPasswordScreen(),
       ),
     );
   }

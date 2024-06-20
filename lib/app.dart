@@ -9,7 +9,7 @@ class TaskManagerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: const SplashScreen(),
       theme: lightTheme(),
     );
   }
@@ -21,9 +21,9 @@ ThemeData lightTheme() {
         fillColor: Colors.white,
         filled: true,
         hintStyle: TextStyle(color: Colors.grey.shade400),
-        border: OutlineInputBorder(borderSide: BorderSide.none),
+        border: const OutlineInputBorder(borderSide: BorderSide.none),
       ),
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
           titleLarge: TextStyle(
               fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
           titleSmall: TextStyle(
@@ -34,7 +34,7 @@ ThemeData lightTheme() {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.themeColor,
-          padding: EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           foregroundColor: AppColors.white,
           fixedSize: const Size.fromWidth(double.maxFinite),
           shape: RoundedRectangleBorder(
@@ -45,5 +45,5 @@ ThemeData lightTheme() {
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
               foregroundColor: Colors.grey,
-              textStyle: TextStyle(fontWeight: FontWeight.w600))));
+              textStyle: const TextStyle(fontWeight: FontWeight.w600))));
 }

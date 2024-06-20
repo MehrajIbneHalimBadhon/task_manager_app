@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager_app/ui/screen/auth/pin_verification_screen.dart';
-import 'package:task_manager_app/ui/screen/auth/sign_in_screen.dart';
 import 'package:task_manager_app/ui/utility/app_colors.dart';
 
 import '../../widget/background_widget.dart';
@@ -24,11 +23,11 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         child: SafeArea(
             child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
                 Text(
@@ -39,21 +38,21 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   'A 6 digits verification pin will be sent to your email address',
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
                     controller: _emailTEController,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(hintText: 'Email')),
-                SizedBox(
+                    decoration: const InputDecoration(hintText: 'Email')),
+                const SizedBox(
                   height: 16,
                 ),
                 ElevatedButton(
                   onPressed: () => _onTapConfirmButton(),
-                  child: Icon(Icons.arrow_forward_ios_rounded),
+                  child: const Icon(Icons.arrow_forward_ios_rounded),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 36,
                 ),
                 Center(
@@ -66,7 +65,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                         text: "Have account? ",
                         children: [
                           TextSpan(
-                            style: TextStyle(color: AppColors.themeColor),
+                            style: const TextStyle(color: AppColors.themeColor),
                             text: "Sign in",
                             recognizer: TapGestureRecognizer()
                               ..onTap = _onTapSignInButton,
@@ -90,7 +89,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PinVerificationScreen(),
+        builder: (context) => const PinVerificationScreen(),
       ),
     );
   }
