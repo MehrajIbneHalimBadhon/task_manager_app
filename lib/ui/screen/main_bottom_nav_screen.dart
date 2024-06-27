@@ -5,7 +5,6 @@ import 'package:task_manager_app/ui/screen/in_progress_task_screen.dart';
 import 'package:task_manager_app/ui/screen/new_task_screen.dart';
 import 'package:task_manager_app/ui/utility/app_colors.dart';
 
-import '../widget/network_cached_image.dart';
 import '../widget/profile_app_bar.dart';
 
 class MainBottomNavigationScreen extends StatefulWidget {
@@ -29,7 +28,7 @@ class _MainBottomNavigationScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: profileAppBar(),
+      appBar: profileAppBar(context),
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,

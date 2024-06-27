@@ -17,10 +17,10 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
         onPressed: _onTapAddButton,
         backgroundColor: AppColors.themeColor,
         foregroundColor: AppColors.white,
+        child: const Icon(Icons.add),
       ),
       body: Column(
         children: [
@@ -31,7 +31,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
               child: ListView.builder(
                 itemCount: 5,
                 itemBuilder: (context, index) {
-                  return TaskItem();
+                  return const TaskItem();
                 },
               ),
             ),
@@ -45,7 +45,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddNewTaskScreen(),
+        builder: (context) => const AddNewTaskScreen(),
       ),
     );
   }

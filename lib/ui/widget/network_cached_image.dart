@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class NetworkCatchedImage extends StatelessWidget {
-   NetworkCatchedImage(
+   const NetworkCatchedImage(
       {super.key, required this.url, this.width, this.height, this.fit});
 
   final String url;
