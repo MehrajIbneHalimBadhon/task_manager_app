@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager_app/ui/controller/auth_controller.dart';
+import 'package:task_manager_app/ui/screen/auth/sign_in_screen.dart';
 import 'package:task_manager_app/ui/screen/update_profile_screen.dart';
 
 import '../utility/app_colors.dart';
@@ -8,17 +10,17 @@ AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
   return AppBar(
     backgroundColor: AppColors.themeColor,
     leading: GestureDetector(
-        onTap: () {
-          if (fromUpdateProfile) {
-            return;
-          }
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const UpdateProfileScreen(),
-            ),
-          );
-        },
+      onTap: () {
+        if (fromUpdateProfile) {
+          return;
+        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const UpdateProfileScreen(),
+          ),
+        );
+      },
       child: const Padding(
         padding: EdgeInsets.all(8.0),
         child: CircleAvatar(
@@ -40,14 +42,14 @@ AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
           ),
         );
       },
-      child: const Column(
+      child: Column(
         children: [
           Text(
-            'Dummy Name',
+            AuthController.userData!.fullName,
             style: TextStyle(fontSize: 16, color: AppColors.white),
           ),
           Text(
-            'dummy@gmail.com',
+            AuthController.userData!.email ?? '',
             style: TextStyle(
                 fontSize: 12,
                 color: AppColors.white,
@@ -57,7 +59,17 @@ AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
       ),
     ),
     actions: [
-      IconButton(onPressed: () {}, icon: const Icon(Icons.logout_outlined))
+      IconButton(
+          onPressed: () async{
+            await AuthController.clearAllData();
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SignInScreen(),
+                ),
+                (route) => false);
+          },
+          icon: const Icon(Icons.logout_outlined))
     ],
   );
 }

@@ -136,7 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Visibility(
                     visible: _registrationInProgress == false,
-                    replacement: Center(
+                    replacement: const Center(
                       child: CircularProgressIndicator(),
                     ),
                     child: ElevatedButton(

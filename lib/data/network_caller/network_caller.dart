@@ -1,13 +1,12 @@
 import 'dart:convert';
-
-import 'package:http/http.dart';
-
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 import '../model/network_response.dart';
 
 class NetworkCaller {
   static Future<NetworkResponse> getRequest(String url) async {
     try {
-      Response response = await get(Uri.parse(url));
+      http.Response response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         final decodedData = jsonDecode(response.body);
         return NetworkResponse(
@@ -17,21 +16,28 @@ class NetworkCaller {
         );
       } else {
         return NetworkResponse(
-            statusCode: response.statusCode, isSuccess: false);
+            statusCode: response.statusCode, isSuccess: false, errorMessage: 'Failed with status code: ${response.statusCode}');
       }
     } catch (e) {
       return NetworkResponse(
-          statusCode: -1, isSuccess: false, errorMessage: e.toString());
+          statusCode: -1, isSuccess: false, errorMessage: 'An error occurred: $e');
     }
   }
 
-  static Future<NetworkResponse> postRequest(
-      String url, {Map<String, dynamic>? body}) async {
+  static Future<NetworkResponse> postRequest(String url, {Map<String, dynamic>? body}) async {
     try {
-      Response response = await post(
-          Uri.parse(url),
-          body: jsonEncode(body),
-          headers: {'Cxontent-type': 'Application/json'});
+      debugPrint('URL: $url');
+      debugPrint('Request Body: $body');
+
+      http.Response response = await http.post(
+        Uri.parse(url),
+        body: jsonEncode(body),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}');
+
       if (response.statusCode == 200) {
         final decodedData = jsonDecode(response.body);
         return NetworkResponse(
@@ -41,11 +47,14 @@ class NetworkCaller {
         );
       } else {
         return NetworkResponse(
-            statusCode: response.statusCode, isSuccess: false);
+          statusCode: response.statusCode,
+          isSuccess: false,
+          errorMessage: 'Failed with status code: ${response.statusCode}',
+        );
       }
     } catch (e) {
       return NetworkResponse(
-          statusCode: -1, isSuccess: false, errorMessage: e.toString());
+          statusCode: -1, isSuccess: false, errorMessage: 'An error occurred: $e');
     }
   }
 }
