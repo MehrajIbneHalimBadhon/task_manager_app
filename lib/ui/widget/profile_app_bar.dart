@@ -43,14 +43,15 @@ AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
         );
       },
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AuthController.userData!.fullName,
-            style: TextStyle(fontSize: 16, color: AppColors.white),
+            AuthController.userData?.fullName ?? '',
+            style: const TextStyle(fontSize: 16, color: AppColors.white),
           ),
           Text(
-            AuthController.userData!.email ?? '',
-            style: TextStyle(
+            AuthController.userData?.email ?? '',
+            style: const TextStyle(
                 fontSize: 12,
                 color: AppColors.white,
                 fontWeight: FontWeight.w500),
@@ -65,7 +66,7 @@ AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SignInScreen(),
+                  builder: (context) => const SignInScreen(),
                 ),
                 (route) => false);
           },

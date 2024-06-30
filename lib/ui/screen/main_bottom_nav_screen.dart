@@ -33,10 +33,9 @@ class _MainBottomNavigationScreenState
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) {
-          _selectedIndex = index;
-          if (mounted) {
-            setState(() {});
-          }
+          setState(() {
+            _selectedIndex = index;
+          });
         },
         selectedItemColor: AppColors.themeColor,
         unselectedItemColor: Colors.grey,
@@ -51,5 +50,4 @@ class _MainBottomNavigationScreenState
       ),
     );
   }
-
 }

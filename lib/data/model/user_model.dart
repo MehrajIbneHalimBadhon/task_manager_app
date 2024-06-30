@@ -26,5 +26,5 @@ class UserModel {
     return data;
   }
 
-  String get fullName => (firstName ?? '') + ' ' + (lastName ?? '');
+  String get fullName => '${firstName ?? ''} ${lastName ?? ''}';
 }
