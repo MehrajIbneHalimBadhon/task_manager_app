@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widget/task_item.dart';
 
 class CancelledTaskScreen extends StatelessWidget {
   const CancelledTaskScreen({super.key});
@@ -11,7 +10,9 @@ class CancelledTaskScreen extends StatelessWidget {
       body: ListView.builder(
           itemCount: 5,
           itemBuilder: (context, index) {
-            return const TaskItem();
+            return null;
+          
+            // return const TaskItem();
           }),
     );
   }

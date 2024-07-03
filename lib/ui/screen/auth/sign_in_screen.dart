@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager_app/data/model/login_model.dart';
@@ -38,7 +37,6 @@ class _SignInScreenState extends State<SignInScreen> {
             padding: const EdgeInsets.all(24),
             child: Form(
               key: _formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -53,6 +51,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 16,
                   ),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: _emailTEController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(hintText: 'Email'),
@@ -70,6 +69,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 8,
                   ),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     obscureText: true,
                     controller: _passwordTEController,
                     decoration: const InputDecoration(hintText: 'Password'),
@@ -175,7 +175,6 @@ class _SignInScreenState extends State<SignInScreen> {
       );
     }
   }
-
 
   void _onTapSignUpButton() {
     Navigator.push(

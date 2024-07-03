@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager_app/ui/widget/task_item.dart';
 
 class InProgressTaskScreen extends StatelessWidget {
   const InProgressTaskScreen({super.key});
@@ -11,7 +10,9 @@ class InProgressTaskScreen extends StatelessWidget {
       body: ListView.builder(
           itemCount: 5,
           itemBuilder: (context, index) {
-            return const TaskItem();
+            return null;
+          
+            // return const TaskItem();
           }),
     );
   }

@@ -36,7 +36,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             padding: const EdgeInsets.all(24),
             child: Form(
               key: _formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -51,6 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 16,
                   ),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: _emailTEController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(hintText: 'Email'),
@@ -68,6 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 8,
                   ),
                   TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: _firstNameTEController,
                       decoration: const InputDecoration(hintText: 'First Name'),
                       validator: (String? value) {
@@ -80,6 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 8,
                   ),
                   TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: _lastNameTEController,
                       decoration: const InputDecoration(hintText: 'Last Name'),
                       validator: (String? value) {
@@ -92,6 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 8,
                   ),
                   TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: _mobileTEController,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(hintText: 'Mobile'),
@@ -109,6 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 8,
                   ),
                   TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: _showPassword == false,
                       controller: _passwordTEController,
                       decoration: InputDecoration(
@@ -195,7 +199,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       "photo": ""
     };
     NetworkResponse response =
-        await NetworkCaller.postRequest(Urls.registration,body: requestInput);
+        await NetworkCaller.postRequest(Urls.registration, body: requestInput);
     _registrationInProgress = false;
     if (mounted) {
       setState(() {});

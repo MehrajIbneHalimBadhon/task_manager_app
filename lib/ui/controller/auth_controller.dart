@@ -28,6 +28,7 @@ class AuthController {
         user.toJson(),
       ),
     );
+    userData = user;
   }
 
   static Future<UserModel?> getUserData() async {
