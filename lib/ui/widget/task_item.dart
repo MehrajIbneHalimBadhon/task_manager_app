@@ -10,8 +10,11 @@ import '../utility/app_colors.dart';
 
 class TaskItem extends StatefulWidget {
   const TaskItem({
-    super.key, required this.taskModel, required this.onUpdateTask,
+    super.key,
+    required this.taskModel,
+    required this.onUpdateTask,
   });
+
   final TaskModel taskModel;
   final VoidCallback onUpdateTask;
 
@@ -21,44 +24,83 @@ class TaskItem extends StatefulWidget {
 
 class _TaskItemState extends State<TaskItem> {
   bool _deleteInProgress = false;
+  bool _editInProgress = false;
+  String dropdownValue = '';
+  List<String> statusList = ['New', 'Progress', 'Completed', 'Cancelled'];
+
+  @override
+  void initState() {
+    dropdownValue = widget.taskModel.status!;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       color: AppColors.white,
       elevation: 0,
       child: ListTile(
-        title:  Text(widget.taskModel.title ?? ''),
+        title: Text(widget.taskModel.title ?? ''),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Text(widget.taskModel.description ?? ''),
-             Text(
+            Text(widget.taskModel.description ?? ''),
+            Text(
               'Date: ${widget.taskModel.createdDate}',
               style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600),
+                  color: Colors.black, fontWeight: FontWeight.w600),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Chip(
-                  label: Text(widget.taskModel.status ?? 'New',style: const TextStyle(color: Colors.black),),
+                  label: Text(
+                    widget.taskModel.status ?? 'New',
+                    style: const TextStyle(color: Colors.black),
+                  ),
                   shape: RoundedRectangleBorder(
-                    side: const BorderSide(
-                        width: 1,
-                        color: Colors.grey
-                    ),
-                    borderRadius: BorderRadius.circular(16),),
-                  padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 2),
+                    side: const BorderSide(width: 1, color: Colors.grey),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   backgroundColor: AppColors.white,
                 ),
                 ButtonBar(
                   children: [
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.edit_outlined),),
                     Visibility(
-                      visible: _deleteInProgress == false,
+                      visible: _editInProgress == false,
+                      replacement: CenterProgressIndicator(),
+                      child: PopupMenuButton(
+                          icon: Icon(Icons.edit),
+                          onSelected: (String selectedValue) {
+                            dropdownValue = selectedValue;
+                            if (mounted) setState(() {});
+                          },
+                          itemBuilder: (BuildContext context) {
+                            return statusList.map((String value) {
+                              return PopupMenuItem(
+                                value: value,
+                                child: ListTile(
+                                  title: Text(value),
+                                  trailing: dropdownValue == value
+                                      ? Icon(Icons.done)
+                                      : null,
+                                ),
+                              );
+                            }).toList();
+                          }),
+                    ),
+                    Visibility(
+                        visible: _deleteInProgress == false,
                         replacement: CenterProgressIndicator(),
-                        child: IconButton(onPressed: (){_deleteTask();}, icon: const Icon(Icons.delete_outlined),)),
+                        child: IconButton(
+                          onPressed: () {
+                            _deleteTask();
+                          },
+                          icon: const Icon(Icons.delete_outlined),
+                        )),
                   ],
                 )
               ],
@@ -75,14 +117,17 @@ class _TaskItemState extends State<TaskItem> {
       setState(() {});
     }
 
-    NetworkResponse response = await NetworkCaller.getRequest(Urls.deleteTask(widget.taskModel.sId!));
+    NetworkResponse response =
+        await NetworkCaller.getRequest(Urls.deleteTask(widget.taskModel.sId!));
 
     if (response.isSuccess) {
       widget.onUpdateTask();
     } else {
       if (mounted) {
         showSnackbarMessage(
-            context, response.errorMessage ?? 'Get Task Count by Status Failed! Try Again');
+            context,
+            response.errorMessage ??
+                'Get Task Count by Status Failed! Try Again');
       }
     }
 
@@ -91,5 +136,4 @@ class _TaskItemState extends State<TaskItem> {
       setState(() {});
     }
   }
-
 }
