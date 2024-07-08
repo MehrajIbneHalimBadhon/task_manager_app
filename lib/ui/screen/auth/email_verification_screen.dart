@@ -1,7 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager_app/data/model/network_response.dart';
+import 'package:task_manager_app/data/network_caller/network_caller.dart';
+import 'package:task_manager_app/data/utilities/urls.dart';
+import 'package:task_manager_app/ui/controller/auth_controller.dart';
 import 'package:task_manager_app/ui/screen/auth/pin_verification_screen.dart';
 import 'package:task_manager_app/ui/utility/app_colors.dart';
+import 'package:task_manager_app/ui/widget/center_progress_indicator.dart';
+import 'package:task_manager_app/ui/widget/snackbar_message.dart';
 
 import '../../widget/background_widget.dart';
 
@@ -15,6 +21,7 @@ class EmailVerificationScreen extends StatefulWidget {
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final TextEditingController _emailTEController = TextEditingController();
+  bool _emailVerificationInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +55,13 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                ElevatedButton(
-                  onPressed: () => _onTapConfirmButton(),
-                  child: const Icon(Icons.arrow_forward_ios_rounded),
+                Visibility(
+                  visible: _emailVerificationInProgress==false,
+                  replacement: const CenterProgressIndicator(),
+                  child: ElevatedButton(
+                    onPressed: () => _emailVerification(_emailTEController.text),
+                    child: const Icon(Icons.arrow_forward_ios_rounded),
+                  ),
                 ),
                 const SizedBox(
                   height: 36,
@@ -79,6 +90,34 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         )),
       ),
     );
+  }
+
+  Future<void> _emailVerification(String email) async {
+    _emailVerificationInProgress = true;
+    if (mounted) setState(() {});
+    Map<String, dynamic> requestData = {
+      "email": _emailTEController.text.trim(),
+    };
+    NetworkResponse response =
+        await NetworkCaller.postRequest(Urls.verifyEmail(email),body: requestData);
+    if (response.isSuccess) {
+      await AuthController.emailVerification(email);
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const PinVerificationScreen(),
+          ),
+        );
+      }
+    } else {
+      if (mounted) {
+        showSnackbarMessage(context,
+            response.errorMessage ?? 'Email Verification Failed! Try Again');
+      }
+    }
+    _emailVerificationInProgress = false;
+    if (mounted) setState(() {});
   }
 
   void _onTapSignInButton() {

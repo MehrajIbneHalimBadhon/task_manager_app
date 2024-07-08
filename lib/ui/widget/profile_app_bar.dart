@@ -1,10 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:task_manager_app/ui/controller/auth_controller.dart';
 import 'package:task_manager_app/ui/screen/auth/sign_in_screen.dart';
 import 'package:task_manager_app/ui/screen/update_profile_screen.dart';
 
 import '../utility/app_colors.dart';
-import 'network_cached_image.dart';
 
 AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
   return AppBar(
@@ -21,11 +22,17 @@ AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
           ),
         );
       },
-      child: const Padding(
-        padding: EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: CircleAvatar(
-          child: NetworkCatchedImage(
-            url: '',
+          backgroundColor: Colors.transparent,
+          child: ClipOval(
+            child: Image.memory(
+              base64Decode(AuthController.userData?.photo ?? ''),
+              fit: BoxFit.cover,
+              width: 50,
+              height: 50,
+            ),
           ),
         ),
       ),
@@ -61,7 +68,7 @@ AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
     ),
     actions: [
       IconButton(
-          onPressed: () async{
+          onPressed: () async {
             await AuthController.clearAllData();
             Navigator.pushAndRemoveUntil(
                 context,

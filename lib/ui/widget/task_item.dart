@@ -24,16 +24,17 @@ class TaskItem extends StatefulWidget {
 
 class _TaskItemState extends State<TaskItem> {
   bool _deleteInProgress = false;
-  bool _editInProgress = false;
+  final bool _editInProgress = false;
   String dropdownValue = '';
   List<String> statusList = ['New', 'Progress', 'Completed', 'Cancelled'];
 
   @override
   void initState() {
     dropdownValue = widget.taskModel.status!;
-
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,16 +65,16 @@ class _TaskItemState extends State<TaskItem> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   backgroundColor: AppColors.white,
                 ),
                 ButtonBar(
                   children: [
                     Visibility(
                       visible: _editInProgress == false,
-                      replacement: CenterProgressIndicator(),
+                      replacement: const CenterProgressIndicator(),
                       child: PopupMenuButton(
-                          icon: Icon(Icons.edit),
+                          icon: const Icon(Icons.edit),
                           onSelected: (String selectedValue) {
                             dropdownValue = selectedValue;
                             if (mounted) setState(() {});
@@ -85,7 +86,7 @@ class _TaskItemState extends State<TaskItem> {
                                 child: ListTile(
                                   title: Text(value),
                                   trailing: dropdownValue == value
-                                      ? Icon(Icons.done)
+                                      ? const Icon(Icons.done)
                                       : null,
                                 ),
                               );
@@ -94,7 +95,7 @@ class _TaskItemState extends State<TaskItem> {
                     ),
                     Visibility(
                         visible: _deleteInProgress == false,
-                        replacement: CenterProgressIndicator(),
+                        replacement: const CenterProgressIndicator(),
                         child: IconButton(
                           onPressed: () {
                             _deleteTask();
@@ -111,6 +112,8 @@ class _TaskItemState extends State<TaskItem> {
     );
   }
 
+
+
   Future<void> _deleteTask() async {
     _deleteInProgress = true;
     if (mounted) {
@@ -118,7 +121,7 @@ class _TaskItemState extends State<TaskItem> {
     }
 
     NetworkResponse response =
-        await NetworkCaller.getRequest(Urls.deleteTask(widget.taskModel.sId!));
+    await NetworkCaller.getRequest(Urls.deleteTask(widget.taskModel.sId!));
 
     if (response.isSuccess) {
       widget.onUpdateTask();

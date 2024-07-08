@@ -15,7 +15,7 @@ import '../widget/task_item.dart';
 import '../widget/task_summary_card.dart';
 
 class NewTaskScreen extends StatefulWidget {
-  const NewTaskScreen({super.key});
+  const NewTaskScreen({super.key, });
 
   @override
   State<NewTaskScreen> createState() => _NewTaskScreenState();

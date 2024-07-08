@@ -15,6 +15,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final TextEditingController _passwordTEController = TextEditingController();
   final TextEditingController _confirmPasswordTEController =
       TextEditingController();
+  bool _setPasswordInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +102,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           builder: (context) => const SignInScreen(),
         ),
         (route) => false);
+  }
+  Future<void> _setPassword(formValues)async{
+    _setPasswordInProgress = true;
+    if(mounted) {
+      setState(() {
+      
+    });
+    }
+    Map<String, dynamic> requestData = {
+      "password": _passwordTEController.text.trim(),
+    };
+
   }
 
   @override

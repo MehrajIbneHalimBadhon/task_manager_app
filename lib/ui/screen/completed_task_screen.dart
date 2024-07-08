@@ -9,7 +9,7 @@ import 'package:task_manager_app/ui/widget/snackbar_message.dart';
 import 'package:task_manager_app/ui/widget/task_item.dart';
 
 class CompletedTaskScreen extends StatefulWidget {
-  const CompletedTaskScreen({super.key});
+  const CompletedTaskScreen({super.key, });
 
   @override
   State<CompletedTaskScreen> createState() => _CompletedTaskScreenState();

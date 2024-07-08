@@ -52,4 +52,13 @@ class AuthController {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
   }
+
+  static Future<void> emailVerification(Email)async{
+    final sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString('EmailVerificaion', Email);
+  }
+  static Future<void> otpVerification(OTP)async{
+    final sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString('OTPVerificaion', OTP);
+  }
 }

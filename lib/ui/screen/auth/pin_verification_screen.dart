@@ -1,9 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:task_manager_app/data/model/network_response.dart';
+import 'package:task_manager_app/data/network_caller/network_caller.dart';
+import 'package:task_manager_app/data/utilities/urls.dart';
+import 'package:task_manager_app/ui/controller/auth_controller.dart';
 import 'package:task_manager_app/ui/screen/auth/reset_password_screen.dart';
 import 'package:task_manager_app/ui/screen/auth/sign_in_screen.dart';
 import 'package:task_manager_app/ui/utility/app_colors.dart';
+import 'package:task_manager_app/ui/widget/snackbar_message.dart';
 
 import '../../widget/background_widget.dart';
 
@@ -16,6 +21,7 @@ class PinVerificationScreen extends StatefulWidget {
 
 class _PinVerificationScreenState extends State<PinVerificationScreen> {
   final TextEditingController _pinTEController = TextEditingController();
+  bool _otpVerificationInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +117,22 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
           builder: (context) => const SignInScreen(),
         ),
         (route) => false);
+  }
+  Future<void> _emailVerification(String otp) async {
+    _otpVerificationInProgress = true;
+    if (mounted) setState(() {});
+    NetworkResponse response =
+    await NetworkCaller.postRequest(Urls.verifyOTP(otp));
+    if (response.isSuccess) {
+      await AuthController.otpVerification(otp);
+    } else {
+      if (mounted) {
+        showSnackbarMessage(context,
+            response.errorMessage ?? 'OTP Verification Failed! Try Again');
+      }
+    }
+    _otpVerificationInProgress = false;
+    if (mounted) setState(() {});
   }
 
   void _onTapVerifyOTPButton() {
