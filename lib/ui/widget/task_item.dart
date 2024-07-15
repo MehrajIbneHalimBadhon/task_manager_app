@@ -24,7 +24,7 @@ class TaskItem extends StatefulWidget {
 
 class _TaskItemState extends State<TaskItem> {
   bool _deleteInProgress = false;
-  final bool _editInProgress = false;
+  bool _editInProgress = false;
   String dropdownValue = '';
   List<String> statusList = ['New', 'Progress', 'Completed', 'Cancelled'];
 
@@ -33,8 +33,6 @@ class _TaskItemState extends State<TaskItem> {
     dropdownValue = widget.taskModel.status!;
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +63,7 @@ class _TaskItemState extends State<TaskItem> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   backgroundColor: AppColors.white,
                 ),
                 ButtonBar(
@@ -73,25 +71,7 @@ class _TaskItemState extends State<TaskItem> {
                     Visibility(
                       visible: _editInProgress == false,
                       replacement: const CenterProgressIndicator(),
-                      child: PopupMenuButton(
-                          icon: const Icon(Icons.edit),
-                          onSelected: (String selectedValue) {
-                            dropdownValue = selectedValue;
-                            if (mounted) setState(() {});
-                          },
-                          itemBuilder: (BuildContext context) {
-                            return statusList.map((String value) {
-                              return PopupMenuItem(
-                                value: value,
-                                child: ListTile(
-                                  title: Text(value),
-                                  trailing: dropdownValue == value
-                                      ? const Icon(Icons.done)
-                                      : null,
-                                ),
-                              );
-                            }).toList();
-                          }),
+                      child: _buildEditButton(),
                     ),
                     Visibility(
                         visible: _deleteInProgress == false,
@@ -112,7 +92,50 @@ class _TaskItemState extends State<TaskItem> {
     );
   }
 
+  Widget _buildEditButton() {
+    return PopupMenuButton(
+        icon: const Icon(Icons.edit),
+        onSelected: (String selectedValue) {
+          dropdownValue = selectedValue;
+          _updateTask(dropdownValue);
+        },
+        itemBuilder: (BuildContext context) {
+          return statusList.map((String value) {
+            return PopupMenuItem(
+              value: value,
+              child: ListTile(
+                title: Text(value),
+                trailing:
+                    dropdownValue == value ? const Icon(Icons.done) : null,
+              ),
+            );
+          }).toList();
+        });
+  }
 
+  Future<void> _updateTask(String status) async {
+    _editInProgress = true;
+    if (mounted) {
+      setState(() {});
+    }
+
+    NetworkResponse response = await NetworkCaller.getRequest(
+        Urls.updateTaskStatus(widget.taskModel.sId!, status));
+
+    if (response.isSuccess) {
+      widget.onUpdateTask();
+    } else {
+      if (mounted) {
+        showSnackbarMessage(context,
+            response.errorMessage ?? 'Update Task Status Failed! Try Again');
+      }
+    }
+
+    _editInProgress = false;
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
   Future<void> _deleteTask() async {
     _deleteInProgress = true;
@@ -121,7 +144,7 @@ class _TaskItemState extends State<TaskItem> {
     }
 
     NetworkResponse response =
-    await NetworkCaller.getRequest(Urls.deleteTask(widget.taskModel.sId!));
+        await NetworkCaller.getRequest(Urls.deleteTask(widget.taskModel.sId!));
 
     if (response.isSuccess) {
       widget.onUpdateTask();
