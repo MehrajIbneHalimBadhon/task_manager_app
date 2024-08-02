@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:task_manager_app/data/model/network_response.dart';
 import 'package:task_manager_app/data/network_caller/network_caller.dart';
 import 'package:task_manager_app/data/utilities/urls.dart';
+import 'package:task_manager_app/ui/screen/main_bottom_nav_screen.dart';
 import 'package:task_manager_app/ui/utility/app_colors.dart';
 import 'package:task_manager_app/ui/utility/app_constants.dart';
 import 'package:task_manager_app/ui/widget/snackbar_message.dart';
@@ -208,6 +209,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _clearTextFields();
       if (mounted) {
         showSnackbarMessage(context, 'Registration Success');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MainBottomNavigationScreen(),
+          ),
+        );
       }
     } else {
       if (mounted) {

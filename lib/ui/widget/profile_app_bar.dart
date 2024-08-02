@@ -8,6 +8,7 @@ import 'package:task_manager_app/ui/screen/update_profile_screen.dart';
 import '../utility/app_colors.dart';
 
 AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
+  double avatarSize = MediaQuery.of(context).size.width * 0.12;
   return AppBar(
     backgroundColor: AppColors.themeColor,
     leading: GestureDetector(
@@ -26,12 +27,17 @@ AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
         padding: const EdgeInsets.all(8.0),
         child: CircleAvatar(
           backgroundColor: Colors.transparent,
+          radius: avatarSize / 2,
           child: ClipOval(
             child: Image.memory(
               base64Decode(AuthController.userData?.photo ?? ''),
               fit: BoxFit.cover,
-              width: 50,
-              height: 50,
+              width: avatarSize,
+              height: avatarSize,
+              errorBuilder: (BuildContext context, Object exception,
+                  StackTrace? stackTrace) {
+                return Icon(Icons.error_outline_rounded, size: avatarSize);
+              },
             ),
           ),
         ),

@@ -101,7 +101,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       setState(() {});
     }
 
-    NetworkResponse response = await NetworkCaller.getRequest(Urls.newTask);
+    NetworkResponse response = await NetworkCaller.getRequest(Urls.newTasks);
 
     if (response.isSuccess) {
       TaskListWrapperModel taskListWrapperModel =

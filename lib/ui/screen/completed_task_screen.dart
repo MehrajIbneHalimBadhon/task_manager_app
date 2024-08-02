@@ -18,7 +18,7 @@ class CompletedTaskScreen extends StatefulWidget {
 class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
   bool _getCompletedTaskInProgress = false;
 
-  List<TaskModel> completedTaskList = [];
+  List<TaskModel> _completedTaskList = [];
   @override
   void initState() {
     _getCompletedTask();
@@ -31,14 +31,17 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
       body: Visibility(
         visible: _getCompletedTaskInProgress == false,
         replacement: const CenterProgressIndicator(),
-        child: ListView.builder(
-            itemCount: completedTaskList.length,
-            itemBuilder: (context, index) {
-              return TaskItem(taskModel: completedTaskList[index], onUpdateTask: () {
-                _getCompletedTask();
-              },);
-              // return const TaskItem();
-            }),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView.builder(
+              itemCount: _completedTaskList.length,
+              itemBuilder: (context, index) {
+                return TaskItem(taskModel: _completedTaskList[index], onUpdateTask: () {
+                  _getCompletedTask();
+                },);
+                // return const TaskItem();
+              }),
+        ),
       ),
     );
   }
@@ -47,11 +50,11 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
     _getCompletedTaskInProgress = true;
     if (mounted) setState(() {});
     NetworkResponse response =
-        await NetworkCaller.getRequest(Urls.completeTask);
+        await NetworkCaller.getRequest(Urls.completedTasks);
     if (response.isSuccess) {
       TaskListWrapperModel taskListWrapperModel =
           TaskListWrapperModel.fromJson(response.responseDate);
-      completedTaskList = taskListWrapperModel.taskList ?? [];
+      _completedTaskList = taskListWrapperModel.taskList ?? [];
     } else {
       if (mounted) {
         showSnackbarMessage(context,

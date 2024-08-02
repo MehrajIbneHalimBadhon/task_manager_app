@@ -120,7 +120,7 @@ class _TaskItemState extends State<TaskItem> {
     }
 
     NetworkResponse response = await NetworkCaller.getRequest(
-        Urls.updateTaskStatus(widget.taskModel.sId!, status));
+        Urls.updateTaskStatus(status,widget.taskModel.sId!));
 
     if (response.isSuccess) {
       widget.onUpdateTask();
