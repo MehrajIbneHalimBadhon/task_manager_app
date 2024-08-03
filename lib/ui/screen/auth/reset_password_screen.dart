@@ -1,11 +1,17 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager_app/data/model/network_response.dart';
+import 'package:task_manager_app/data/network_caller/network_caller.dart';
+import 'package:task_manager_app/data/utilities/urls.dart';
 import 'package:task_manager_app/ui/screen/auth/sign_in_screen.dart';
 import 'package:task_manager_app/ui/utility/app_colors.dart';
+import 'package:task_manager_app/ui/widget/center_progress_indicator.dart';
+import 'package:task_manager_app/ui/widget/snackbar_message.dart';
 
 import '../../widget/background_widget.dart';
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  const ResetPasswordScreen({super.key, required this.email, required this.otp});
+  final String email,otp;
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -53,9 +59,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                ElevatedButton(
-                  onPressed: () => _onTapConfirmButton(),
-                  child: const Text('Confirm'),
+                Visibility(
+                  visible: _setPasswordInProgress==false,
+                  replacement: const CenterProgressIndicator(),
+                  child: ElevatedButton(
+                    onPressed: _onTapConfirmButton,
+                    child: const Text('Confirm'),
+                  ),
                 ),
                 const SizedBox(
                   height: 36,
@@ -86,6 +96,44 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     );
   }
 
+  Future<void> _resetPassword(String password) async {
+    _setPasswordInProgress = true;
+    if (mounted) {
+      setState(() {});
+    }
+
+    Map<String,dynamic> inputParams=  {
+      "email":widget.email,
+      "OTP":widget.otp,
+      "password":password,
+    };
+
+    NetworkResponse response =
+    await NetworkCaller.postRequest(Urls.resetPassword,body: inputParams);
+    _setPasswordInProgress = false;
+    if(mounted){
+      setState(() {});
+    }
+
+    if (response.isSuccess) {
+      if (mounted) {
+        showSnackbarMessage(context,'Password reset successful! Try logging in now.');
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const SignInScreen(),
+            ),
+                (route) => false);
+      }
+    } else {
+      if (mounted) {
+        showSnackbarMessage(context,
+            response.errorMessage ?? 'Reset Password Failed! Try Again');
+      }
+    }
+  }
+
+
   void _onTapSignInButton() {
     Navigator.pushAndRemoveUntil(
         context,
@@ -96,30 +144,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   void _onTapConfirmButton() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const SignInScreen(),
-        ),
-        (route) => false);
-  }
-  Future<void> _setPassword(formValues)async{
-    _setPasswordInProgress = true;
-    if(mounted) {
-      setState(() {
-      
-    });
-    }
-    Map<String, dynamic> requestData = {
-      "password": _passwordTEController.text.trim(),
-    };
-
+    _resetPassword(_passwordTEController.text);
   }
 
-  @override
-  void dispose() {
-    _passwordTEController.dispose();
-    _confirmPasswordTEController.dispose();
-    super.dispose();
-  }
 }
