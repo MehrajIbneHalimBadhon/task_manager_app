@@ -44,6 +44,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
         child: const Icon(Icons.add),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSummarySection(),
           Expanded(
